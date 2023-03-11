@@ -5,37 +5,53 @@ public class Program
     public static void Main(string[] args) 
     {
         Console.WriteLine("Triangle calculator");
+        
+        Console.WriteLine("");
+
 
         double xA, yA, xB, yB, xC, yC;
 
-        //Ask the user to type numbers.
+        //Ask the user to type numbers
         Console.WriteLine("Enter coordinate x of dot A:");
-        xA = Convert.ToDouble(Console.ReadLine());
+        Double.TryParse(Console.ReadLine(), out xA);
+
+        //Invalid number check
+        //while (!Double.TryParse(Console.ReadLine(), out xA))
+        //{
+        //    Console.WriteLine("Invalid number given, try again:");
+        //}
+
 
         Console.WriteLine("Enter coordinate y of dot A:");
-        yA = Convert.ToDouble(Console.ReadLine());
+        Double.TryParse(Console.ReadLine(), out yA);
 
         Console.WriteLine("Enter coordinate x of dot B:");
-        xB = Convert.ToDouble(Console.ReadLine());
+        Double.TryParse(Console.ReadLine(), out xB);
 
         Console.WriteLine("Enter coordinate y of dot B:");
-        yB = Convert.ToDouble(Console.ReadLine());
+        Double.TryParse(Console.ReadLine(), out yB);
 
         Console.WriteLine("Enter coordinate x of dot C:");
-        xC = Convert.ToDouble(Console.ReadLine());
+        Double.TryParse(Console.ReadLine(), out xC);
 
         Console.WriteLine("Enter coordinate y of dot C:");
-        yC = Convert.ToDouble(Console.ReadLine());
+        Double.TryParse(Console.ReadLine(), out yC);
+
+        
+        Console.WriteLine("");
+
 
         //Calculate sides
-        double calcAB = Math.Round((double)Math.Sqrt(Math.Pow((xB - xA), 2) + Math.Pow((yB - yA), 2)), MidpointRounding.ToEven);
-        double calcBC = Math.Round((double)Math.Sqrt(Math.Pow((xC - xB), 2) + Math.Pow((yC - yB), 2)), MidpointRounding.ToEven);
-        double calcAC = Math.Round((double)Math.Sqrt(Math.Pow((xC - xA), 2) + Math.Pow((yC - yA), 2)), MidpointRounding.ToEven);
+        double calcAB = Math.Sqrt(Math.Pow((xB - xA), 2) + Math.Pow((yB - yA), 2));
+        double calcBC = Math.Sqrt(Math.Pow((xC - xB), 2) + Math.Pow((yC - yB), 2));
+        double calcAC = Math.Sqrt(Math.Pow((xC - xA), 2) + Math.Pow((yC - yA), 2));
 
         Console.WriteLine($"Length of AB is: '{calcAB}'");
         Console.WriteLine($"Length of BC is: '{calcBC}'");
         Console.WriteLine($"Length of AC is: '{calcAC}'");
 
+
+        Console.WriteLine("");
 
 
         /*
@@ -46,133 +62,44 @@ public class Program
        */
 
 
+        //Set triangle type
+        bool equiliteral = calcAB == calcBC && calcBC == calcAC && calcAB == calcAC;
+        bool isoscales = calcAB == calcBC || calcBC == calcAC || calcAB == calcAC;
+        bool scalene = calcAB != calcBC && calcBC != calcAC && calcAB != calcAC;
+        bool pythagorean = Math.Abs(Math.Pow(calcBC, 2) - (Math.Pow(calcAB, 2) + Math.Pow(calcAC, 2))) <= Math.Pow(0.1, 10) || 
+                            Math.Pow(calcAB, 2) + Math.Pow(calcBC, 2) == Math.Pow(calcAC, 2) ||
+                            Math.Pow(calcBC, 2) + Math.Pow(calcAC, 2) == Math.Pow(calcAB, 2) ||
+                            Math.Pow(calcAB, 2) + Math.Pow(calcAC, 2) == Math.Pow(calcBC, 2);
+
         //Check triangle type
-        bool equiliteral = (calcAB == calcBC && calcBC == calcAC && calcAB == calcAC);
-        bool isoscales = (calcAB == calcBC || calcBC == calcAC || calcAB == calcAC);
-        bool scalene = (calcAB != calcBC && calcBC != calcAC && calcAB != calcAC);
-        bool pythagorean = (Math.Pow(calcAB, 2) + Math.Pow(calcBC, 2) == Math.Pow(calcAC, 2) ||
-            Math.Pow(calcBC, 2) + Math.Pow(calcAC, 2) == Math.Pow(calcAB, 2) ||
-            Math.Pow(calcAB, 2) + Math.Pow(calcAC, 2) == Math.Pow(calcBC, 2));
-            /* || calcBC * calcBC - calcAB * calcAB + calcAC * calcAC <=? */
-
-        //Jak zrobić żeby sprawdzało jeszcze warunek pitagorejski? kwestia zaokrąglenia wszystkich wartości odpowiednio
-
-        if (equiliteral)
-
-        {
-            Console.WriteLine("Triangle IS 'Equiliteral'");
-        }
-
-
-        else if (isoscales && pythagorean)
-        {
-            Console.WriteLine("Triangle IS NOT 'Equilateral'");
-            Console.WriteLine("Triangle IS NOT 'Scalene'");
-            Console.WriteLine("Triangle IS 'Isoscales'");
-            Console.WriteLine("Triangle IS 'Right'");
-
-        }
+       Console.WriteLine($"Triangle {(equiliteral ? "IS" : "IS NOT")} 'Equiliteral'");
+        
+       Console.WriteLine($"Triangle {(isoscales ? "IS" : "IS NOT")} 'Isoscales'");       
        
-        else if (isoscales)
-        {
-            Console.WriteLine("Triangle IS 'Isoscales'");
-            Console.WriteLine("Triangle IS NOT 'Equilateral'");
-            Console.WriteLine("Triangle IS NOT 'Scalene'");
-           
-        }
+       Console.WriteLine($"Triangle {(scalene ? "IS" : "IS NOT")} 'Scalene'");
+       
+       Console.WriteLine($"Triangle {(pythagorean ? "IS" : "IS NOT")} 'Right'");
 
-        else if (pythagorean)
-        {
-            Console.WriteLine("Triangle IS NOT 'Equilateral'");
-            Console.WriteLine("Triangle IS NOT 'Scalene'");
-            Console.WriteLine("Triangle IS 'Right'");
-        }
-      
-        else if (scalene && pythagorean)
-        {
-            Console.WriteLine("Triangle IS 'Scalene'");
-            Console.WriteLine("Triangle IS 'Right'");
-        }
 
-        else if (scalene)
-        {
-            Console.WriteLine("Triangle IS 'Scalene'");
-        }
-
-        if (pythagorean)
-        {
-            Console.WriteLine("Triangle IS 'Right'");
-        }
-
-        else
-        {
-            Console.WriteLine("Triangle IS NOT 'Right'");
-        }
+       Console.WriteLine("");
 
 
         //Perimeter
         double calcP = (calcAB + calcBC + calcAC);
         Console.WriteLine($"Perimeter is: {calcP}");
 
-        //Parity numbers
+        Console.WriteLine("");
 
-        for (int i = 0; i < calcP; i++)
+
+        //Parity numbers
+        Console.WriteLine("Parity numbers in range from 0 to triangle perimeter:");
+
+        for (int i = 0; i < calcP; i+=2)
         {
-            if (i % 2 == 0)
-            Console.WriteLine(i);
+           Console.WriteLine(i);
         }
 
        
     }
 }
 
-/*
- 
-
-        //Ask the user to type numbers.
-        Console.WriteLine("Enter coordinate x of dot A:");
-        xA = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine("Enter coordinate y of dot A:");
-        yA = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine("Enter coordinate x of dot B:");
-        xB = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine("Enter coordinate y of dot B:");
-        yB = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine("Enter coordinate x of dot C:");
-        xC = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine("Enter coordinate y of dot C:");
-        yC = Convert.ToInt32(Console.ReadLine()); 
-
-  if (calcAB == calcBC && calcBC == calcAC && calcAB == calcAC)
-
-        {
-            Console.WriteLine("Triangle IS 'Equiliteral'");
-        }
-
-        else if (calcAB == calcBC || calcBC == calcAC || calcAB == calcAC)
-        {
-            Console.WriteLine("Triangle IS 'Isoscales'");
-            Console.WriteLine("Triangle IS NOT 'Equilateral'");
-            Console.WriteLine("Triangle IS NOT 'Scalene'");
-            Console.WriteLine("Triangle IS 'Right'");
-        }
-
-
-        else if (calcAB * calcAB + calcBC * calcBC == calcAC * calcAC || calcBC * calcBC + calcAC * calcAC  == calcAB * calcAB || calcAB * calcAB + calcAC * calcAC == calcBC * calcBC)
-        {
-            Console.WriteLine("Triangle IS NOT 'Equilateral'");
-            Console.WriteLine("Triangle IS NOT 'Scalene'");
-            Console.WriteLine("Triangle IS 'Isoscales'");
-            Console.WriteLine("Triangle IS 'Right'");
-        }
-
-        else if (calcAB != calcBC && calcBC != calcAC && calcAB != calcAC)
-        {
-            Console.WriteLine("Triangle IS 'Scalene'");
-        }
- */
