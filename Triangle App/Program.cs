@@ -8,7 +8,7 @@
 
         double xA, yA, xB, yB, xC, yC;
 
-        //Ask the user to type numbers
+        //Ask user to type numbers
         Console.WriteLine("Enter coordinate x of dot A:");
         Double.TryParse(Console.ReadLine(), out xA);
 
@@ -45,7 +45,7 @@
         double calcAC = Math.Sqrt(Math.Pow((xC - xA), 2) + Math.Pow((yC - yA), 2));
 
 
-        //Set triangle type
+        //Check triangle type
         bool equiliteral = calcAB == calcBC && calcBC == calcAC && calcAB == calcAC;
         bool isoscales = calcAB == calcBC || calcBC == calcAC || calcAB == calcAC;
         bool scalene = calcAB != calcBC && calcBC != calcAC && calcAB != calcAC;
@@ -55,15 +55,17 @@
                             Math.Pow(calcAB, 2) + Math.Pow(calcAC, 2) == Math.Pow(calcBC, 2);
 
 
-        //Check triangle type
+        //Show informations
         if (calcAB != 0 && calcBC != 0 && calcAC != 0)
         {
+            //Show sides length
             Console.WriteLine($"Length of AB is: '{calcAB}'");
             Console.WriteLine($"Length of BC is: '{calcBC}'");
             Console.WriteLine($"Length of AC is: '{calcAC}'");
 
             Console.WriteLine("");
 
+            //Show triangle type
             Console.WriteLine($"Triangle {(equiliteral ? "IS" : "IS NOT")} 'Equiliteral'");
             Console.WriteLine($"Triangle {(isoscales ? "IS" : "IS NOT")} 'Isoscales'");
             Console.WriteLine($"Triangle {(scalene ? "IS" : "IS NOT")} 'Scalene'");
@@ -72,14 +74,14 @@
             Console.WriteLine("");
 
 
-            //Perimeter
+            //Calculate perimeter
             double calcP = (calcAB + calcBC + calcAC);
             Console.WriteLine($"Perimeter is: {calcP}");
 
             Console.WriteLine("");
 
 
-            //Parity numbers
+            //Calculate parity numbers
             Console.WriteLine("Parity numbers in range from 0 to triangle perimeter:");
 
             for (int i = 0; i < calcP; i += 2)
